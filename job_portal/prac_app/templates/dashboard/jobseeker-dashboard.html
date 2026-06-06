@@ -1,0 +1,44 @@
+{% extends 'master/base.html' %}
+
+
+{% block content %}
+
+<h2>Jobseeker Dashboard</h2>
+
+<div class="card p-3 mb-4">
+
+    <h4>Total Applied Jobs</h4>
+    <h2>{{total_applied_jobs}}</h2>
+</div>
+
+<h3>Recommended Jobs</h3>
+
+<div class="row">
+    
+    {% for job in matched_jobs  %}
+
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h4>{{job.title}}</h4>
+                <p><strong>Skills : </strong>
+                {{job.skills_set}}
+                </p>
+                <p><strong>Category : </strong>
+                {{job.category}}
+                </p>
+                <p><strong>Match : </strong>
+                {{job.match_percentage}}%
+                </p>
+            </div>
+        </div>
+    </div>
+        {% empty %}
+
+    <h5>No Recommended Jobs</h5>
+    {% endfor %}
+        
+</div>
+    
+{% endblock content %}
+    

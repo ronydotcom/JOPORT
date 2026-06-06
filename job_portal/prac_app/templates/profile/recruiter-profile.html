@@ -1,0 +1,70 @@
+{% extends "master/base.html" %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="row g-0">
+
+        <div class="col-md-4">
+
+            {% if profile.company_logo %}
+
+            <img src="{{ profile.company_logo.url }}"
+                    class="img-fluid rounded-start">
+
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card-body">
+
+                <h3>
+                    {{ profile.company_name }}
+                </h3>
+
+                <p> <strong> Email : </strong>
+                    {{ profile.company_email }}
+                </p>
+
+                <p> <strong> Web : </strong>
+                    {{ profile.company_website }}
+                </p>
+
+                <p> <strong> Info : </strong>
+                    {{ profile.company_description }}
+                </p>
+
+                <a href="?edit=true"
+                    class="btn btn-primary">
+
+                    Edit
+
+                </a>
+
+                <form method="POST"
+                        class="d-inline">
+
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            name="delete_profile"
+                            class="btn btn-danger">
+
+                        Delete
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

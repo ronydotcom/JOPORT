@@ -1,0 +1,56 @@
+{% extends 'master/base.html' %}
+
+
+{% block content %}
+
+<h2>Job application</h2>
+
+
+{% for job in jobs  %}
+
+<div class="card mb-4">
+
+    <div class="card-header">
+        <h4>{{job.title}}</h4>
+    </div>
+
+    <div class="card-body">
+        
+        {% for application in job.jobapplication_set.all  %}
+
+        <div class="border p-3 mb-3">
+
+            <h5>{{application.applicant.full_name}}</h5>
+            <p>
+                <strong> skills: </strong>
+                {{application.applicant.skills}}
+            </p>
+            <p>
+                <strong> bio: </strong>
+                {{application.applicant.bio}}
+            </p>
+            <p><strong>Resume : </strong>
+            {%if application.applicant.resume %}
+                <a href="{{application.applicant.resume.url}}"
+                target="blank"
+                class="btn btn-dark btn-sm">
+                View IT
+                </a>
+                </p>
+            {% endif %}
+
+        </div>
+        {%empty%}
+        <p>NO applications yet</p>
+            
+        {% endfor %}
+            
+    </div>
+
+</div>
+    
+{% endfor %}
+    
+    
+{% endblock content %}
+    

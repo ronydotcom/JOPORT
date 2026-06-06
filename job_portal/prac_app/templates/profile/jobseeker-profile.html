@@ -1,0 +1,63 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+<div class="card">
+
+  <div class="row g-0">
+
+    <div class="col-md-4">
+
+        {% if profile.profile_image %}
+
+        <img src="{{profile.profile_image.url}}" 
+        class="img-fluid rounded-start"> 
+
+        {% endif %}
+
+    </div>
+
+
+
+    <div class="col-md-8">
+
+      <div class="card-body">
+
+        <h3>{{profile.full_name}}</h3>
+
+        <p><strong>Skills:</strong>
+            {{profile.skills}}
+        </p>
+
+        <p><strong>BIO:</strong>
+            {{profile.bio}}
+        </p>
+        
+        {% if profile.resume %}
+
+        <a href="{{profile.resume.url}}" target = '_blank' 
+        class="btn btn-dark">
+        Resume
+
+        </a>
+            
+        {% endif %}
+        <a href="?edit=true" class="btn btn-primary">Edit</a>
+        <form method="POST" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" 
+            name="delete_profile" 
+            class="btn btn-danger">
+
+            Delete
+
+            </button>
+        </form>
+            
+      </div>
+    </div>
+  </div>
+</div>
+    
+{% endblock content %}
+    

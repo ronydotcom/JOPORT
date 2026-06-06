@@ -1,0 +1,100 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+```
+<h2 class="mb-4">All Jobs</h2>
+
+<form method="GET" class="mb-4">
+    <input
+        type="text"
+        name="search"
+        class="form-control"
+        placeholder="Search by title, category or skills..."
+        value="{{ search }}"
+    >
+</form>
+
+<div class="row">
+
+    {% for job in jobs %}
+
+    <div class="col-md-6 mb-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h4 class="card-title">{{ job.title }}</h4>
+
+                <p>
+                    <strong>Category:</strong>
+                    {{ job.category }}
+                </p>
+
+                <p>
+                    <strong>Openings:</strong>
+                    {{ job.number_of_openings }}
+                </p>
+
+                <p>
+                    <strong>Skills:</strong>
+                    {{ job.skills_set }}
+                </p>
+
+                <p>
+                    <strong>Overview:</strong>
+                    {{ job.job_description }}
+                </p>
+
+                <div class="mt-3">
+
+                    {% if user.is_authenticated and user.user_type == 'jobseeker' %}
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input
+                                type="hidden"
+                                name="job_id"
+                                value="{{ job.id }}"
+                            >
+
+                            <button type="submit" class="btn btn-success">
+                                Apply Now
+                            </button>
+                        </form>
+
+                    {% else %}
+
+                        <a href="{% url 'login_page' %}" class="btn btn-primary">
+                            Login to Apply
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+        <div class="alert alert-warning">
+            No jobs found.
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+```
+
+</div>
+
+{% endblock content %}

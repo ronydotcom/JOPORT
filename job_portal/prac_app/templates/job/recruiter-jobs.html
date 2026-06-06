@@ -1,0 +1,48 @@
+{% extends 'master/base.html' %}
+{% block content %}
+
+<h2>Your Jobs</h2>
+<a href="?create=true" class="btn btn-primary mb-3">
+    Create job
+</a>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Openings</th>
+        <th>required skills</th>
+        <th>Action</th>
+    </tr>
+
+    
+    {% for job in jobs  %}
+
+    <tr>
+        <td>{{job.title}}</td>
+        <td>{{job.category}}</td>
+        <td>{{job.number_of_openings}}</td>
+        <td>{{job.skills_set}}</td>
+
+        <td>
+            <a href="?edit={{job.id}}"
+            class="btn btn-warning btn-sm">
+            Edit
+        </a>
+
+        <form method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button
+            type="submit"
+            name="delete_job"
+            value="{{job.id}}"
+            class="btn btn-danger btn-sm">
+            Delete
+            </button>
+        </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

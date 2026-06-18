@@ -1,126 +1,70 @@
 {% extends 'master/base.html' %}
+
 {% block content %}
 
 <h2>Recruiter Dashboard</h2>
 
 <div class="row mb-4">
-
     <div class="col-md-6">
-
-        <div class="card p-3">
-
-            <h4>Total Jobs</h4>
-
-            <h2>{{total_jobs}}</h2>
-
-        </div>
-
+        <h3>Total Jobs : {{ total_jobs }}</h3>
+        <h3>Total Applications : {{ total_applicants}}</h3>
     </div>
 
-    <div class="col-md-6">
 
-        <div class="card p-3">
-
-            <h4>Total Applications</h4>
-
-            <h2>{{total_applicants}}</h2>
-
-        </div>
-    </div>
+<div class="col-md-6">
+    
 </div>
 
+
+</div>
 
 {% if best_candidate %}
 
-<div class="card p-3 mb-3 border-success">
-
-    <h4 class="text-success">
-
-    Best Candidate
-
-    </h4>
-
-    <p>
-    <strong>Name :</strong>
-    {{best_candidate.applicant.full_name}}
-
-    </p>
-
-    <p>
-    <strong>job : </strong>
-    {{best_candidate.job.title}}
-    </p>
-
-    <p>
-        <strong>Match : </strong>
-        {{best_candidate.match_percentage}}%
-    </p>
+<div class="border p-3 mb-3">
+    <h5>Best Candidate</h5>
+    <p><strong>Name:</strong> {{ best_candidate.applicant.full_name }}</p>
+    <p><strong>Job:</strong> {{ best_candidate.job.title }}</p>
+    <p><strong>Match:</strong> {{ best_candidate.match_percentage }}%</p>
 </div>
-    
 {% endif %}
-
 
 {% if worst_candidate %}
 
-<div class="card p-3 mb-4 border-danger">
-
-    <h4 class="text-danger">
-
-    Worst Candidate
-
-    </h4>
-
-    <p>
-    <strong>Name :</strong>
-    {{worst_candidate.applicant.full_name}}
-
-    </p>
-
-    <p>
-    <strong>job : </strong>
-    {{worst_candidate.job.title}}
-    </p>
-
-    <p>
-        <strong>Match : </strong>
-        {{worst_candidate.match_percentage}}%
-    </p>
-
+<div class="border p-3 mb-4">
+    <h5>Worst Candidate</h5>
+    <p><strong>Name:</strong> {{ worst_candidate.applicant.full_name }}</p>
+    <p><strong>Job:</strong> {{ worst_candidate.job.title }}</p>
+    <p><strong>Match:</strong> {{ worst_candidate.match_percentage }}%</p>
 </div>
-    
 {% endif %}
 
+<h4>Applicants</h4>
 
-<h3>All applicants</h3>
-
-<table class="table table-bordered">
-
+<table class="table">
     <tr>
         <th>Candidate</th>
         <th>Job</th>
         <th>Applicant Skills</th>
-        <th>Job skills</th>
+        <th>Job Skills</th>
         <th>Match</th>
     </tr>
 
-    
-    {% for application in applications  %}
+```
+{% for application in applications %}
+<tr>
+    <td>{{ application.applicant.full_name }}</td>
+    <td>{{ application.job.title }}</td>
+    <td>{{ application.applicant.skills }}</td>
+    <td>{{ application.job.skills_set }}</td>
+    <td>{{ application.match_percentage }}%</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="5">No applicants found.</td>
+</tr>
+{% endfor %}
+```
 
-    <tr>
-        <td>{{application.applicant.full_name}}</td>
-        <td>{{application.job.title}}</td>
-        <td>{{application.applicant.skills}}</td>
-        <td>{{application.job.skills_set}}</td>
-        <td>{{application.match_percentage}}</td>
-    </tr>
-
-    {%empty%}
-
-    <tr>
-        <td colspan="5">
-            NO applicants found
-        </td>
-    </tr>
-    {% endfor %}
 </table>
-{% endblock content %}
+
+{% endblock %}

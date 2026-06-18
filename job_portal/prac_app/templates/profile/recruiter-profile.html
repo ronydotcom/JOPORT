@@ -2,68 +2,30 @@
 
 {% block content %}
 
-<div class="card">
+<div class="border p-3">
 
-    <div class="row g-0">
+    {% if profile.company_logo %}
+    <img src="{{ profile.company_logo.url }}"
+         class="mb-3 rounded-circle border"
+         style="width:120px;height:120px;object-fit:cover;">
+    {% endif %}
 
-        <div class="col-md-4">
+    <h3>{{ profile.company_name }}</h3>
 
-            {% if profile.company_logo %}
+    <p><strong>Email:</strong> {{ profile.company_email }}</p>
 
-            <img src="{{ profile.company_logo.url }}"
-                    class="img-fluid rounded-start">
+    <p><strong>Web:</strong> {{ profile.company_website }}</p>
 
-            {% endif %}
+    <p><strong>Info:</strong> {{ profile.company_description }}</p>
 
-        </div>
+    <a href="?edit=true" class="btn btn-primary">Edit</a>
 
-        <div class="col-md-8">
-
-            <div class="card-body">
-
-                <h3>
-                    {{ profile.company_name }}
-                </h3>
-
-                <p> <strong> Email : </strong>
-                    {{ profile.company_email }}
-                </p>
-
-                <p> <strong> Web : </strong>
-                    {{ profile.company_website }}
-                </p>
-
-                <p> <strong> Info : </strong>
-                    {{ profile.company_description }}
-                </p>
-
-                <a href="?edit=true"
-                    class="btn btn-primary">
-
-                    Edit
-
-                </a>
-
-                <form method="POST"
-                        class="d-inline">
-
-                    {% csrf_token %}
-
-                    <button type="submit"
-                            name="delete_profile"
-                            class="btn btn-danger">
-
-                        Delete
-
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </div>
+    <form method="POST" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" name="delete_profile" class="btn btn-danger">
+            Delete
+        </button>
+    </form>
 
 </div>
 

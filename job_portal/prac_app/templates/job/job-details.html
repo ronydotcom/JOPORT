@@ -1,0 +1,58 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+<h2>{{ job.title }}</h2>
+
+<hr>
+
+<p>
+    <strong>Category:</strong>
+    {{ job.category }}
+</p>
+
+<p>
+    <strong>Openings:</strong>
+    {{ job.number_of_openings }}
+</p>
+
+<p>
+    <strong>Required Skills:</strong>
+    {{ job.skills_set }}
+</p>
+
+<p>
+    <strong>Description:</strong>
+</p>
+
+<p>
+    {{ job.job_description }}
+</p>
+
+{% if user.is_authenticated and user.user_type == 'jobseeker' %}
+
+<form method="POST" action="{% url 'all_jobs' %}">
+    {% csrf_token %}
+    <input
+        type="hidden"
+        name="job_id"
+        value="{{ job.id }}"
+    >
+
+    <button type="submit" class="btn btn-success">
+        Apply Now
+    </button>
+</form>
+
+{% else %}
+
+<a
+    href="{% url 'login_page' %}"
+    class="btn btn-primary"
+>
+    Login To Apply
+</a>
+
+{% endif %}
+
+{% endblock %}

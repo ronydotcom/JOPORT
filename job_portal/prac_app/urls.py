@@ -13,6 +13,7 @@ urlpatterns = [
     path('applied-jobs/',applied_jobs,name='applied_jobs'),
     path('recruiter-dashboard/',recruiter_dashboard,name='recruiter_dashboard'),
     path('jobseeker-dashboard/',jobseeker_dashboard,name='jobseeker_dashboard'),
+    path('job/<int:id>/',job_details,name='job_details'),
 
 
 ]

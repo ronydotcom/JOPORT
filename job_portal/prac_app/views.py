@@ -227,7 +227,7 @@ def recruiter_profile(request):
 def recruiter_jobs(request):
 
     if request.user.user_type!= 'recruiter':
-        return render('login_page')
+        return redirect('login_page')
     
     recruiter_profile=get_object_or_404(
         RecruiterProfile,
@@ -537,3 +537,17 @@ def jobseeker_dashboard(request):
     }
 
     return render(request,'dashboard/jobseeker-dashboard.html',context)
+
+
+
+def job_details(request, id):
+
+    job = get_object_or_404(Job, id=id)
+
+    return render(
+        request,
+        'job/job-details.html',
+        {
+            'job': job
+        }
+    )

@@ -2,99 +2,59 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<h2>All Jobs</h2>
 
-```
-<h2 class="mb-4">All Jobs</h2>
-
-<form method="GET" class="mb-4">
-    <input
-        type="text"
-        name="search"
-        class="form-control"
-        placeholder="Search by title, category or skills..."
-        value="{{ search }}"
-    >
+<form method="GET" class="mb-3">
+    <input type="text" name="search"
+        class="form-control" placeholder="Search jobs..."
+        value="{{ search }}">
 </form>
 
-<div class="row">
+{% for job in jobs %}
 
-    {% for job in jobs %}
+<div class="card mb-3">
+    <div class="card-body">
 
-    <div class="col-md-6 mb-4">
 
-        <div class="card shadow-sm h-100">
+    <h4>{{ job.title }}</h4>
 
-            <div class="card-body">
+    <p>
+        {{ job.category }} |
+        {{ job.number_of_openings }} Openings
+    </p>
 
-                <h4 class="card-title">{{ job.title }}</h4>
+    <p>
+        <strong>Skills:</strong>
+        {{ job.skills_set }}
+    </p>
 
-                <p>
-                    <strong>Category:</strong>
-                    {{ job.category }}
-                </p>
+    <a href="{% url 'job_details' job.id %}"
+       class="btn btn-primary btn-sm">
+        View Details
+    </a>
 
-                <p>
-                    <strong>Openings:</strong>
-                    {{ job.number_of_openings }}
-                </p>
+    {% if user.is_authenticated and user.user_type == 'jobseeker' %}
 
-                <p>
-                    <strong>Skills:</strong>
-                    {{ job.skills_set }}
-                </p>
+    <form method="POST" class="d-inline">
+        {% csrf_token %}
+        <input type="hidden" name="job_id" value="{{ job.id }}">
 
-                <p>
-                    <strong>Overview:</strong>
-                    {{ job.job_description }}
-                </p>
+        <button type="submit" class="btn btn-success btn-sm">
+            Apply
+        </button>
+    </form>
 
-                <div class="mt-3">
-
-                    {% if user.is_authenticated and user.user_type == 'jobseeker' %}
-
-                        <form method="POST">
-                            {% csrf_token %}
-                            <input
-                                type="hidden"
-                                name="job_id"
-                                value="{{ job.id }}"
-                            >
-
-                            <button type="submit" class="btn btn-success">
-                                Apply Now
-                            </button>
-                        </form>
-
-                    {% else %}
-
-                        <a href="{% url 'login_page' %}" class="btn btn-primary">
-                            Login to Apply
-                        </a>
-
-                    {% endif %}
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    {% empty %}
-
-    <div class="col-12">
-        <div class="alert alert-warning">
-            No jobs found.
-        </div>
-    </div>
-
-    {% endfor %}
-
-</div>
-```
+    {% endif %}
 
 </div>
 
-{% endblock content %}
+
+</div>
+
+{% empty %}
+
+<p>No jobs found.</p>
+
+{% endfor %}
+
+{% endblock %}

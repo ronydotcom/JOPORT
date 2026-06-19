@@ -4,10 +4,28 @@
 
 <h2>All Jobs</h2>
 
-<form method="GET" class="mb-3">
-    <input type="text" name="search"
-        class="form-control" placeholder="Search jobs..."
-        value="{{ search }}">
+<form method="GET" class="mb-4">
+    <div class="input-group">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search by title, category or skills..."
+            value="{{ search }}"
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+
+        {% if search %}
+        <a href="{% url 'all_jobs' %}" class="btn btn-danger">
+            &times;
+        </a>
+        {% endif %}
+
+    </div>
 </form>
 
 {% for job in jobs %}
